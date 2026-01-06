@@ -9,5 +9,5 @@ I work on large models and systems by trying things, breaking them, and fixing w
 If you enjoy long-term tinkering and learning from what doesn’t work, we’ll probably get along.
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&hide_title=true&hide_border=true&bg_color=00000000&text_color=777777&icon_color=777777" />
+  <img src="https://github-readme-stats.vercel.app/api?username=cklxx&show_icons=true&hide_title=true&hide_border=true&bg_color=00000000&text_color=777777&icon_color=777777" />
 </p>
