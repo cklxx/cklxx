@@ -1,21 +1,13 @@
-## Hi there 
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=16&pause=1200&color=888888&center=true&vCenter=true&width=520&lines=trying+things+%E2%86%92+breaking+them+%E2%86%92+fixing+what+matters" />
+</p>
 
-Hi, I’m Kailun. 👋
+Hi, I’m Kailun.
 
-I work on large models and systems that are meant to last.
+I work on large models and systems by trying things, breaking them, and fixing what matters.
 
-I care about how models accumulate experience, how decisions compound, and how small design choices shape long-term behavior.
+If you enjoy long-term tinkering and learning from what doesn’t work, we’ll probably get along.
 
-Most of my work lives in the uncomfortable middle ground between research and reality.
-
-Ideas have to survive noisy data, limited compute, delayed feedback, and imperfect objectives.
-
-I think in loops, not milestones.
-
-Progress is rarely linear. It’s a slow tightening of feedback loops.
-
-Recently, I’ve been exploring agent systems, reinforcement learning, and token-efficient reasoning, with a focus on sustainability rather than scale alone.
-
-I enjoy working on things that don’t look impressive at first glance, but keep paying off years later.
-
-If you’re also playing a long game, we’ll probably understand each other.
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&hide_title=true&hide_border=true&bg_color=00000000&text_color=777777&icon_color=777777" />
+</p>
