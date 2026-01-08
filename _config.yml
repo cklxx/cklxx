@@ -1,0 +1,12 @@
+title: Kailun's Notes
+description: 用博客记录我如何拆解问题、验证假设、再重建思考的过程。
+url: "https://kailun.github.io"
+baseurl: ""
+markdown: kramdown
+theme: minima
+permalink: /:categories/:title/
+
+minima:
+  social_links:
+    - platform: github
+      user_url: https://github.com/
