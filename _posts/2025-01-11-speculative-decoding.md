@@ -133,8 +133,8 @@ $$\sum_{j=1}^{V} P_{i,j} = 1 \quad \forall i \in \{1,\dots,L\}$$
 自回归解码时，真正被用来采样的是最后一行
 
 $$P_{L,:} = \mathrm{softmax}(h_L^\top W)$$
-根据采样规则我们就可以选出我们要的下一个 token 是什么，但从计算上看，前面所有 $$P_{1,:}$$ 到 $$P_{L-1,:}$$在这次 forward 里已经完整存在，所以如果我们一次输入 $$L + n
-$$ 个 token， $$P_{L,:}$$ 到 $$P_{L+n-1,:}$$ 也都会被计算出来，拿到这些概率，我们就可以很容易的验证后面的 $$n-1$$ 个token是否符合采样规则。
+
+根据采样规则我们就可以选出我们要的下一个 token 是什么，但从计算上看，前面所有 $$P_{1,:}$$ 到 $$P_{L-1,:}$$在这次 forward 里已经完整存在，所以如果我们一次输入 $$L + n$$ 个 token， $$P_{L,:}$$ 到 $$P_{L+n-1,:}$$ 也都会被计算出来，拿到这些概率，我们就可以很容易的验证后面的 $$n-1$$ 个token是否符合采样规则。
 一个好理解的例子
 我们来看看直接使用目标模型预测下一个 token 的过程：
 假设词表只有 6 个 token：
@@ -213,10 +213,9 @@ $$\begin{bmatrix}
 ---
 工程实现
 看到这里，想必同学们已经学会投机采样，老板：xx你来，给我们业务上一下这个优化。
-代码参考：
-https://github.com/ai-clarify/mini-llm/blob/main/infer/mlx/bench.py
-bench对比
-tbd
+代码参考：https://github.com/ai-clarify/mini-llm/blob/main/infer/mlx/bench.py
+bench对比 tbd
+
 ---
 
 历史和未来
