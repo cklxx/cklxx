@@ -221,19 +221,30 @@ bench对比 tbd
 历史和未来
 
 2018 年 Stern、Shazeer、Uszkoreit 提出了 blockwise parallel decoding，核心已经很接近今天大家说的 draft and verify：并行预测多个未来位置，再用一个打分模型验证，最后回退到能确认的最长前缀，在 greedy 条件下可以做到不损失质量的迭代次数减少，甚至在允许轻微质量变化时换来更高倍数的速度收益。 
+
 到了 2022 年，Leviathan、Kalman、Matias 把这个思路系统化，提出 speculative decoding，并把“分布保持不变”放到了算法核心，给出了严谨的采样与纠偏步骤，让它适用于常见的采样策略。 
-2023 年 DeepMind 的 speculative sampling 几乎同期独立完成，论文里也明确提到与前者并行独立，重点放在大模型分布式服务的工程现实里，并给出一套可在硬件数值误差范围内保持目标分布的拒绝采样方案。 
+
+2023 年 DeepMind 的 speculative sampling 几乎同期独立完成，论文里也明确提到与前者并行独立，重点放在大模型分布式服务的工程现实里，并给出一套可在硬件数值误差范围内保持目标分布的拒绝采样方案。
+
 2024 年又出现了不依赖外部草稿模型的一支路线，代表是 Medusa，它在同一个大模型骨干上加多头解码头来并行预测多个后续 token，再用树状的并行验证机制减少解码步数，论文报告了在多种提示类型上约 2.3 到 2.8 倍的加速且不牺牲生成质量。 
+
 2025 年 EAGLE-3 把另一条关键线索推得更远，聚焦怎样把草稿端训练得更像一个合格的加速器，通过直接 token 预测、多层特征融合等设计提升接受率，从而放大整体速度收益。 这些思路也很快进入了工程生态，Hugging Face 把它整理成 assisted decoding 的接口形态，明确描述了“助手提出候选，主模型一次前向验证”的生成方式。 vLLM 、SGLang 和 TensorRT-LLM 这类推理引擎也把投机解码当成一等特性来做系统级整合，并给出面向吞吐的实测数据与注意事项。
+
+---
 进一步的方向：把草稿命中率做上去，EAGLE‑3 做了什么，还有哪些路线
+
 加速取决于草稿快和命中率高，一定需要专门优化草稿器。
+
 EAGLE‑3 的核心思路是把草稿模型做成更擅长预测多步 token 的形态。论文里提到它抛弃了早期版本的特征预测约束，改成直接做 token 预测，并通过 training time test 去模拟多步生成过程，同时融合目标模型多层特征。它报告在多个模型和任务上，温度为 0 的 speedup ratio 最高到 6.5 倍，并且在 SGLang 里 batch size=64 时吞吐还能提升 38%。
+
 除了 EAGLE 系列，还有几条常见路线：
 - Medusa：不引入额外草稿模型，直接在同一个模型上加多个 decoding head 并用树状验证。论文里报告 Medusa‑1 能做到超过 2.2 倍加速，Medusa‑2 到 2.3 到 3.6 倍。 (arXiv)
 - N gram、Suffix Decoding 这类基于模式匹配的“非神经草稿器”，在重复性很强的任务上很香，比如代码编辑、循环式 agent。vLLM 文档里把这些当成 speculator 的不同实现方式。 (vLLM)
 - 级联草稿、多层草稿、早退草稿、同模型自投机等，都是在“更便宜地产生更靠谱的候选”这个方向上做文章。Google 的回顾文章也总结过行业里不少沿着这个范式扩展的工作。 (Google Research)
 - DFlash：把投机解码和 Flash-Attention、speculative execution 级别的内核融合放在一起做，核心思路是减少“被拒绝 token”的无效算力，把验证阶段的 attention 和前向尽量压进一次 GPU 执行里。论文和代码里展示的是在高接受率场景下，把 speculative decoding 的收益从算法层面进一步兑现到 kernel 层面，对 inter token latency 更友好。当前主要价值在工程路径上，而不是提出新的解码范式，常被视为对 vLLM、TensorRT-LLM 这类系统的补强方向。（DFlash，arXiv / GitHub）
+
 整体看下来，这几条路线本质都围绕同一个判断展开：投机解码的上限不在多猜几个 token，而在便宜地产生候选，并且让验证几乎不浪费算力。
+
 Medusa 在模型结构上做文章，N-gram 和 suffix 直接绕过神经网络，级联和早退在系统调度上榨成本空间，DFlash 则把瓶颈进一步下沉到 GPU 执行层。不同方案在不同数据分布下表现差异很大，这也是 vLLM 和 Google Research 会强调没有单一方案能稳定统治所有 workload的原因。
 
 ---
