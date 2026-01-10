@@ -81,20 +81,7 @@ $$H \in \mathbb{R}^{L \times d}$$，$$W \in \mathbb{R}^{d \times V}$$
 他们线性投影得到 logits 矩阵
 $$Z = H W \in \mathbb{R}^{L \times V}$$
 把它按行展开，形式就是
-$$Z =
-\begin{bmatrix}
-h_1^\top W \\
-h_2^\top W \\
-\vdots \\
-h_L^\top W
-\end{bmatrix}
-=
-\begin{bmatrix}
-z_{1,1} & z_{1,2} & \cdots & z_{1,V} \\
-z_{2,1} & z_{2,2} & \cdots & z_{2,V} \\
-\vdots  & \vdots  & \ddots & \vdots  \\
-z_{L,1} & z_{L,2} & \cdots & z_{L,V}
-\end{bmatrix}$$
+$$Z =\begin{bmatrix}h_1^\top W \\ h_2^\top W \\ \vdots \\ h_L^\top W\end{bmatrix} =\begin{bmatrix} z_{1,1} & z_{1,2} & \cdots & z_{1,V} \\ z_{2,1} & z_{2,2} & \cdots & z_{2,V} \\ \vdots  & \vdots  & \ddots & \vdots  \\ z_{L,1} & z_{L,2} & \cdots & z_{L,V}\end{bmatrix}$$
 这里第 $$i$$行$$z_i = h_i^\top W \in \mathbb{R}^{V}$$就是在位置 $$i$$，对整个词表的打分向量。
 Softmax 是按行独立做的，可以写成
 $$P = \mathrm{softmax}(Z) \in \mathbb{R}^{L \times V}$$
@@ -103,20 +90,7 @@ $$P_{i,j} = \frac{\exp(Z_{i,j})}{\sum_{k=1}^{V} \exp(Z_{i,k})}$$
 
 展开成矩阵形式就是
 
-$$P =
-\begin{bmatrix}
-\mathrm{softmax}(z_1) \\
-\mathrm{softmax}(z_2) \\
-\vdots \\
-\mathrm{softmax}(z_L)
-\end{bmatrix}
-=
-\begin{bmatrix}
-p_{1,1} & p_{1,2} & \cdots & p_{1,V} \\
-p_{2,1} & p_{2,2} & \cdots & p_{2,V} \\
-\vdots  & \vdots  & \ddots & \vdots  \\
-p_{L,1} & p_{L,2} & \cdots & p_{L,V}
-\end{bmatrix}$$
+$$P =\begin{bmatrix} \mathrm{softmax}(z_1) \\ \mathrm{softmax}(z_2) \\ \vdots \\ \mathrm{softmax}(z_L) \end{bmatrix} = \begin{bmatrix} p_{1,1} & p_{1,2} & \cdots & p_{1,V} \\ p_{2,1} & p_{2,2} & \cdots & p_{2,V} \\ \vdots  & \vdots  & \ddots & \vdots  \\ p_{L,1} & p_{L,2} & \cdots & p_{L,V} \end{bmatrix}$$
 并且对每一行都有
 $$\sum_{j=1}^{V} P_{i,j} = 1 \quad \forall i \in \{1,\dots,L\}$$
 自回归解码时，真正被用来采样的是最后一行
@@ -138,21 +112,12 @@ $$[0.05, 0.60, 0.10, 0.20, 0.04, 0.05]$$
 普通解码，每次只算一行，选一个 token 作为新 token，下一次再算下一行，要预测下一个token则再输入  $$AB
 $$ 
 概率矩阵$$P_2$$就变成 2×6：
-$$
-\begin{bmatrix}
-0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\
-0.05, 0.05, 0.20,0.65, 0.04, 0.05
-\end{bmatrix}$$
+$$\begin{bmatrix} 0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\ 0.05, 0.05, 0.20,0.65, 0.04, 0.05 \end{bmatrix}$$
 这里最大的是 $$D$$（0.65），就选 $$D$$，最后生成的序列连起来就是
  $$ABD$$
 如果我们先用草稿模型很快啊，自回归生成了两个 token $$BC$$；
 再回到目标模型计算，输入 $$ABC$$，目标模型前向传播得概率矩阵$$P_3$$（3×6）
-$$
-\begin{bmatrix}
-0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\
-0.05, 0.05, 0.20,0.65, 0.04, 0.05\\
-0.05, 0.05, 0.63, 0.18, 0.04, 0.05
-\end{bmatrix}$$
+$$\begin{bmatrix} 0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\ 0.05, 0.05, 0.20,0.65, 0.04, 0.05\\ 0.05, 0.05, 0.63, 0.18, 0.04, 0.05 \end{bmatrix}$$
 你看第2、3个token的概率也都一起计算出来了，按照贪心解码，第2个 token 是 $$B$$（0.60），第3个token是  $$D$$ ，（0.65），那么预测结果$$B$$就可以被采用，而$$C$$需要被抛弃，并且我们也能确认第3个 token 是 $$D$$；
 细心的你一定发现，过程中发生了两次向前，一次草稿模型一次目标模型，最终生成的结果也是
  $$ABD$$
