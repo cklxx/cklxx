@@ -76,37 +76,61 @@ batch size=1、贪心模式、lookahead K=3 的最小流程
 - 词表大小是 $$V$$
 我们只需要看大模型的解码过程的最后一步，这一步计算位于 Transformer 解码 forward 的末端，在所有自注意力层和前馈网络完成之后，用输出投影将 hidden states 映射到词表空间，并显式构造每个位置上的完整 next-token 概率分布，是将 hidden states 显式转换为全词表概率分布的最后一步。
 先从 hidden states 开始，设
+
 $$H \in \mathbb{R}^{L \times d}$$，$$W \in \mathbb{R}^{d \times V}$$
+
 他们线性投影得到 logits 矩阵
+
 $$Z = H W \in \mathbb{R}^{L \times V}$$
+
 把它按行展开，形式就是
+
 $$Z =\begin{bmatrix}h_1^\top W \\ h_2^\top W \\ \vdots \\ h_L^\top W\end{bmatrix} =\begin{bmatrix} z_{1,1} & z_{1,2} & \cdots & z_{1,V} \\ z_{2,1} & z_{2,2} & \cdots & z_{2,V} \\ \vdots  & \vdots  & \ddots & \vdots  \\ z_{L,1} & z_{L,2} & \cdots & z_{L,V}\end{bmatrix}$$
+
 这里第 $$i$$ 行 $$z_i = h_i^\top W \in \mathbb{R}^{V}$$ 就是在位置 $$i$$，对整个词表的打分向量。
 Softmax 是按行独立做的，可以写成
- $$P = \mathrm{softmax}(Z) \in \mathbb{R}^{L \times V}$$ 
+
+ $$P = \mathrm{softmax}(Z) \in \mathbb{R}^{L \times V}$$
+ 
 更具体地，对任意位置 $$i$$ 和词表索引 $$j$$：
+
  $$P_{i,j} = \frac{\exp(Z_{i,j})}{\sum_{k=1}^{V} \exp(Z_{i,k})}$$ 
 
 展开成矩阵形式就是
+
  $$P =\begin{bmatrix} \mathrm{softmax}(z_1) \\ \mathrm{softmax}(z_2) \\ \vdots \\ \mathrm{softmax}(z_L) \end{bmatrix} = \begin{bmatrix} p_{1,1} & p_{1,2} & \cdots & p_{1,V} \\ p_{2,1} & p_{2,2} & \cdots & p_{2,V} \\ \vdots  & \vdots  & \ddots & \vdots  \\ p_{L,1} & p_{L,2} & \cdots & p_{L,V} \end{bmatrix}$$ 
 
 并且对每一行都有
+
  $$\sum_{j=1}^{V} P_{i,j} = 1 \quad \forall i \in \{1,\dots,L\}$$ 
+ 
 自回归解码时，真正被用来采样的是最后一行
+
  $$P_{L,:} = \mathrm{softmax}(h_L^\top W)$$ 
+ 
 根据采样规则我们就可以选出我们要的下一个 token 是什么，但从计算上看，前面所有 $$P_{1,:}$$ 到 $$P_{L-1,:}$$ 在这次 forward 里已经完整存在，所以如果我们一次输入 $$L + n$$ 个 token，$$P_{L,:}$$ 到 $$P_{L+n-1,:}$$ 也都会被计算出来，拿到这些概率，我们就可以很容易的验证后面的 $$n-1$$ 个token是否符合采样规则。
 一个好理解的例子
 我们来看看直接使用目标模型预测下一个 token 的过程：
-假设词表只有 6 个 token：$$V = ["A","B","C","D","E",""]$$
+假设词表只有 6 个 token：
+
+$$V = ["A","B","C","D","E",""]$$
+
 你输入 token  $$A$$ ，目标模型前向传播得到 logits 矩阵 $$Z$$，为了直观，我直接写成概率矩阵 $$P_1$$（1×6）
+
  $$[0.05, 0.60, 0.10, 0.20, 0.04, 0.05]$$
+ 
 很直观，矩阵位置的每个数字对应 token 的解码概率，这里最大的是 $$B$$（0.60），贪心解码下一个token就选 $$B$$。
 普通解码，每次只算一行，选一个 token 作为新 token，下一次再算下一行，要预测下一个token则再输入  $$AB$$ 
-概率矩阵 $$P_2$$ 就变成 2×6: $$\begin{bmatrix} 0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\ 0.05, 0.05, 0.20,0.65, 0.04, 0.05 \end{bmatrix}$$
+概率矩阵 $$P_2$$ 就变成 2×6: 
+
+$$\begin{bmatrix} 0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\ 0.05, 0.05, 0.20,0.65, 0.04, 0.05 \end{bmatrix}$$
+
 这里最大的是 $$D$$ （0.65），就选 $$D$$ ，最后生成的序列连起来就是 $$ABD$$
 如果我们先用草稿模型很快啊，自回归生成了两个 token $$BC$$；
 再回到目标模型计算，输入 $$ABC$$，目标模型前向传播得概率矩阵 $$P_3$$（3×6）
+
 $$\begin{bmatrix} 0.05, 0.60, 0.10, 0.20, 0.04, 0.05\\ 0.05, 0.05, 0.20,0.65, 0.04, 0.05\\ 0.05, 0.05, 0.63, 0.18, 0.04, 0.05 \end{bmatrix}$$
+
 你看第2、3个token的概率也都一起计算出来了，按照贪心解码，第2个 token 是 $$B$$（0.60），第3个token是  $$D$$ ，（0.65），那么预测结果$$B$$就可以被采用，而$$C$$需要被抛弃，并且我们也能确认第3个 token 是 $$D$$；
 细心的你一定发现，过程中发生了两次向前，一次草稿模型一次目标模型，最终生成的结果也是 $$ABD$$
 
