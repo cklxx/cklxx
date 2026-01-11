@@ -1,0 +1,27 @@
+---
+import "../styles/global.css";
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} | Kailun's Notes` : "Kailun's Notes";
+const pageDescription =
+  description ?? "用博客记录我如何拆解问题、验证假设、再重建思考的过程。";
+---
+
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Kailun's Notes</h1>
+        <p>用博客记录我如何拆解问题、验证假设、再重建思考的过程。</p>
+      </header>
+      <slot />
+    </main>
+  </body>
+</html>

@@ -1,8 +1,7 @@
 ---
-layout: post
+layout: ../../layouts/BaseLayout.astro
 title: "我的方法：从拆解到重建"
-date: 2025-01-01 09:00:00 +0800
-categories: blog
+description: "我写博客的目的不是给出答案，而是把我的思考过程摊开给自己看。"
 ---
 
 我写博客的目的不是给出答案，而是把我的思考过程摊开给自己看。
