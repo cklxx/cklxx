@@ -10,11 +10,16 @@
     "test": "astro check"
   },
   "devDependencies": {
-    "astro": "^4.15.1",
     "@astrojs/check": "^0.7.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "astro": "^4.15.1",
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.34.0",
-    "@typescript-eslint/parser": "^7.11.0",
     "typescript": "5.5.4"
+  },
+  "dependencies": {
+    "katex": "^0.16.27",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   }
 }
