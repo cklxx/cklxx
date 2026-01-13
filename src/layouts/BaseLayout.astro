@@ -4,8 +4,7 @@ import "../styles/global.css";
 
 const { title, description } = Astro.props;
 const pageTitle = title ? `${title} | Kailun's Notes` : "Kailun's Notes";
-const pageDescription =
-  description ?? "用博客记录我如何拆解问题、验证假设、再重建思考的过程。";
+const pageDescription = description ?? "构建现实不存在的事物。";
 ---
 
 <!doctype html>
@@ -20,7 +19,7 @@ const pageDescription =
     <main>
       <header>
         <h1>Kailun's Notes</h1>
-        <p>用博客记录我如何拆解问题、验证假设、再重建思考的过程。</p>
+        <p>构建现实不存在的事物。</p>
       </header>
       <slot />
     </main>
