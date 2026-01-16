@@ -163,6 +163,7 @@ article p {
   background: transparent;
   padding: 0;
   cursor: pointer;
+  --link-color: #6b5a3b;
 }
 
 .go-chain-cell:focus-visible {
@@ -187,27 +188,41 @@ article p {
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25), inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 
+.go-chain-cell.black {
+  --link-color: #2b2b2b;
+}
+
 .go-chain-cell.white .stone {
   background: radial-gradient(circle at 30% 30%, #ffffff, #e7e0d6 70%);
   border-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 6px 0 rgba(90, 70, 30, 0.2), inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.go-chain-cell.white {
+  --link-color: #e2d7c8;
+}
+
 .go-chain-cell .link {
   position: absolute;
-  background: #6b5a3b;
+  background: var(--link-color);
   border-radius: 999px;
   opacity: 0;
   z-index: 1;
   transition: opacity 0.2s ease;
 }
 
-.go-chain-cell.black .link {
-  background: #2b2b2b;
+.go-chain-cell.link-merged::before {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 14px;
+  background: var(--link-color);
+  z-index: 1;
+  opacity: 0.95;
 }
 
-.go-chain-cell.white .link {
-  background: #e2d7c8;
+.go-chain-cell.link-merged .stone {
+  inset: 18%;
 }
 
 .go-chain-cell.link-up .link.up,
