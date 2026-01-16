@@ -118,11 +118,10 @@ title: "主页"
       cell.classList.remove(
         "black",
         "white",
-        "link-merged",
-        "link-up",
-        "link-down",
-        "link-left",
-        "link-right",
+        "merge-up",
+        "merge-down",
+        "merge-left",
+        "merge-right",
         "link-up-left",
         "link-up-right",
         "link-down-left",
@@ -146,22 +145,18 @@ title: "主页"
         const hasRight = col < boardSize - 1 && board[row][col + 1] === color;
 
         if (hasUp) {
-          cell.classList.add("link-up");
+          cell.classList.add("merge-up");
         }
         if (hasDown) {
-          cell.classList.add("link-down");
+          cell.classList.add("merge-down");
         }
         if (hasLeft) {
-          cell.classList.add("link-left");
+          cell.classList.add("merge-left");
         }
         if (hasRight) {
-          cell.classList.add("link-right");
+          cell.classList.add("merge-right");
         }
 
-        const linkCount = Number(hasUp) + Number(hasDown) + Number(hasLeft) + Number(hasRight);
-        if (linkCount >= 3) {
-          cell.classList.add("link-merged");
-        }
         if (row > 0 && col > 0 && board[row - 1][col - 1] === color) {
           cell.classList.add("link-up-left");
         }
@@ -226,6 +221,7 @@ title: "主页"
     board[row][col] = currentPlayer;
     const opponent = currentPlayer === "black" ? "white" : "black";
     let captured = false;
+    const mergeTargets = new Set([row * boardSize + col]);
 
     for (const [nextRow, nextCol] of getNeighbors(row, col)) {
       if (
@@ -237,14 +233,17 @@ title: "主页"
         continue;
       }
 
-      if (board[nextRow][nextCol] !== opponent) {
+      if (board[nextRow][nextCol] === currentPlayer) {
+        mergeTargets.add(nextRow * boardSize + nextCol);
         continue;
       }
 
-      const opponentGroup = getGroup(nextRow, nextCol, opponent);
-      if (countLiberties(opponentGroup) === 0) {
-        captureGroup(opponentGroup);
-        captured = true;
+      if (board[nextRow][nextCol] === opponent) {
+        const opponentGroup = getGroup(nextRow, nextCol, opponent);
+        if (countLiberties(opponentGroup) === 0) {
+          captureGroup(opponentGroup);
+          captured = true;
+        }
       }
     }
 
@@ -257,6 +256,16 @@ title: "主页"
 
     consecutivePasses = 0;
     updateBoard();
+    for (const index of mergeTargets) {
+      const cell = cells[index];
+      cell.classList.add("merge-animate");
+    }
+    setTimeout(() => {
+      for (const index of mergeTargets) {
+        const cell = cells[index];
+        cell.classList.remove("merge-animate");
+      }
+    }, 240);
     updateScores();
     switchPlayer();
   };
@@ -278,8 +287,13 @@ title: "主页"
         stone.className = "stone";
         cell.appendChild(stone);
 
-        ["up", "down", "left", "right", "up-left", "up-right", "down-left", "down-right"].forEach(
-          (direction) => {
+        ["up", "down", "left", "right"].forEach((direction) => {
+          const merge = document.createElement("span");
+          merge.className = `merge ${direction}`;
+          cell.appendChild(merge);
+        });
+
+        ["up-left", "up-right", "down-left", "down-right"].forEach((direction) => {
           const link = document.createElement("span");
           link.className = `link ${direction}`;
           cell.appendChild(link);
