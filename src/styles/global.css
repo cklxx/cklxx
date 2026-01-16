@@ -150,11 +150,11 @@ article p {
   margin: 0 auto;
   padding: 0.5rem;
   border-radius: 14px;
-  background-image: linear-gradient(#d5d8dc 1px, transparent 1px),
-    linear-gradient(90deg, #d5d8dc 1px, transparent 1px);
+  background-image: linear-gradient(#d9c8a9 1px, transparent 1px),
+    linear-gradient(90deg, #d9c8a9 1px, transparent 1px);
   background-size: calc(100% / var(--board-size)) calc(100% / var(--board-size));
-  background-color: #fefdf8;
-  box-shadow: inset 0 0 0 1px #d5d8dc;
+  background-color: #f7edd4;
+  box-shadow: inset 0 0 0 1px #e3d2b6;
 }
 
 .go-chain-cell {
@@ -172,38 +172,42 @@ article p {
 
 .go-chain-cell .stone {
   position: absolute;
-  inset: 18%;
+  inset: 10%;
   border-radius: 50%;
   background: transparent;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
   z-index: 2;
 }
 
 .go-chain-cell.black .stone {
-  background: radial-gradient(circle at 30% 30%, #5a5a5a, #141414 70%);
-  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.4);
+  background: radial-gradient(circle at 30% 30%, #6b6b6b, #1f1f1f 70%);
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25), inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 
 .go-chain-cell.white .stone {
-  background: radial-gradient(circle at 30% 30%, #ffffff, #d9d9d9 70%);
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #e7e0d6 70%);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 0 rgba(90, 70, 30, 0.2), inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .go-chain-cell .link {
   position: absolute;
-  background: #374151;
+  background: #6b5a3b;
+  border-radius: 999px;
   opacity: 0;
   z-index: 1;
   transition: opacity 0.2s ease;
 }
 
 .go-chain-cell.black .link {
-  background: #2f2f2f;
+  background: #2b2b2b;
 }
 
 .go-chain-cell.white .link {
-  background: #c4c4c4;
+  background: #e2d7c8;
 }
 
 .go-chain-cell.link-up .link.up,
@@ -216,17 +220,24 @@ article p {
   opacity: 1;
 }
 
+.go-chain-cell.link-up-left .link.up-left,
+.go-chain-cell.link-up-right .link.up-right,
+.go-chain-cell.link-down-left .link.down-left,
+.go-chain-cell.link-down-right .link.down-right {
+  opacity: 1;
+}
+
 .go-chain-cell .link.up,
 .go-chain-cell .link.down {
   left: 50%;
-  width: 4px;
+  width: 8px;
   transform: translateX(-50%);
 }
 
 .go-chain-cell .link.left,
 .go-chain-cell .link.right {
   top: 50%;
-  height: 4px;
+  height: 8px;
   transform: translateY(-50%);
 }
 
@@ -248,6 +259,33 @@ article p {
 .go-chain-cell .link.right {
   right: -8%;
   width: 28%;
+}
+
+.go-chain-cell .link.up-left,
+.go-chain-cell .link.up-right,
+.go-chain-cell .link.down-left,
+.go-chain-cell .link.down-right {
+  width: 40%;
+  height: 10%;
+  top: 50%;
+  left: 50%;
+  transform-origin: left center;
+}
+
+.go-chain-cell .link.up-left {
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.go-chain-cell .link.up-right {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.go-chain-cell .link.down-left {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.go-chain-cell .link.down-right {
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .go-chain__score {

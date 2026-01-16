@@ -115,7 +115,18 @@ title: "主页"
 
   const updateBoard = () => {
     for (const cell of cells) {
-      cell.classList.remove("black", "white", "link-up", "link-down", "link-left", "link-right");
+      cell.classList.remove(
+        "black",
+        "white",
+        "link-up",
+        "link-down",
+        "link-left",
+        "link-right",
+        "link-up-left",
+        "link-up-right",
+        "link-down-left",
+        "link-down-right"
+      );
     }
 
     for (let row = 0; row < boardSize; row += 1) {
@@ -139,6 +150,22 @@ title: "主页"
         }
         if (col < boardSize - 1 && board[row][col + 1] === color) {
           cell.classList.add("link-right");
+        }
+        if (row > 0 && col > 0 && board[row - 1][col - 1] === color) {
+          cell.classList.add("link-up-left");
+        }
+        if (row > 0 && col < boardSize - 1 && board[row - 1][col + 1] === color) {
+          cell.classList.add("link-up-right");
+        }
+        if (row < boardSize - 1 && col > 0 && board[row + 1][col - 1] === color) {
+          cell.classList.add("link-down-left");
+        }
+        if (
+          row < boardSize - 1 &&
+          col < boardSize - 1 &&
+          board[row + 1][col + 1] === color
+        ) {
+          cell.classList.add("link-down-right");
         }
       }
     }
@@ -240,7 +267,8 @@ title: "主页"
         stone.className = "stone";
         cell.appendChild(stone);
 
-        ["up", "down", "left", "right"].forEach((direction) => {
+        ["up", "down", "left", "right", "up-left", "up-right", "down-left", "down-right"].forEach(
+          (direction) => {
           const link = document.createElement("span");
           link.className = `link ${direction}`;
           cell.appendChild(link);
