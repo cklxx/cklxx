@@ -118,6 +118,7 @@ title: "主页"
       cell.classList.remove(
         "black",
         "white",
+        "link-merged",
         "link-up",
         "link-down",
         "link-left",
@@ -139,17 +140,27 @@ title: "主页"
         const cell = cells[row * boardSize + col];
         cell.classList.add(color);
 
-        if (row > 0 && board[row - 1][col] === color) {
+        const hasUp = row > 0 && board[row - 1][col] === color;
+        const hasDown = row < boardSize - 1 && board[row + 1][col] === color;
+        const hasLeft = col > 0 && board[row][col - 1] === color;
+        const hasRight = col < boardSize - 1 && board[row][col + 1] === color;
+
+        if (hasUp) {
           cell.classList.add("link-up");
         }
-        if (row < boardSize - 1 && board[row + 1][col] === color) {
+        if (hasDown) {
           cell.classList.add("link-down");
         }
-        if (col > 0 && board[row][col - 1] === color) {
+        if (hasLeft) {
           cell.classList.add("link-left");
         }
-        if (col < boardSize - 1 && board[row][col + 1] === color) {
+        if (hasRight) {
           cell.classList.add("link-right");
+        }
+
+        const linkCount = Number(hasUp) + Number(hasDown) + Number(hasLeft) + Number(hasRight);
+        if (linkCount >= 3) {
+          cell.classList.add("link-merged");
         }
         if (row > 0 && col > 0 && board[row - 1][col - 1] === color) {
           cell.classList.add("link-up-left");
