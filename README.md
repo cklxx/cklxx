@@ -1,28 +1,19 @@
-<h1 align="center">Kailun Chen</h1>
+# Hi, I'm Kailun 👋
 
-<p align="center">
-  Building AI agents and systems infrastructure.
-</p>
+Building AI agents and systems infrastructure.
 
-<p align="center">
-  <a href="https://x.com/kailunchen5"><img src="https://img.shields.io/badge/X-000000?style=flat&logo=x&logoColor=white" /></a>
-</p>
+![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white)
+![Claude](https://img.shields.io/badge/-Claude-000000?style=flat-square&logo=anthropic&logoColor=white)
 
----
+## Projects
 
-### Projects
+- 🐘 **[elephant.ai](https://github.com/cklxx/elephant.ai)** — Leader agent with dual-process architecture: lightweight chat thread for instant response, full ReAct agent for background execution
+- 🌱 **[OpenSeed](https://github.com/cklxx/OpenSeed)** — Research CLI to search, read, and analyze academic papers with Claude
+- ⚡ **[openMax](https://github.com/cklxx/openMax)** — Multi-agent orchestration hub
+- 🧪 **[openbench](https://github.com/cklxx/openbench)** — A/B testing platform for Claude agents
+- 🧠 **[openHas](https://github.com/cklxx/openHas)** — Memory system with graph representation and predictive recall
 
-| | |
-|---|---|
-| **[elephant.ai](https://github.com/cklxx/elephant.ai)** | Leader agent with dual-process architecture — chat thread for fast response, ReAct agent thread for background execution |
-| **[openMax](https://github.com/cklxx/openMax)** | Multi-agent orchestration hub |
-| **[OpenSeed](https://github.com/cklxx/OpenSeed)** | Research CLI — search, read, and analyze academic papers with Claude |
-| **[openbench](https://github.com/cklxx/openbench)** | A/B testing platform for Claude agents |
-| **[openHas](https://github.com/cklxx/openHas)** | Memory system with graph representation and predictive recall |
+## Connect
 
----
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=cklxx&show_icons=true&theme=graywhite&hide_border=true&count_private=true" height="150" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=cklxx&layout=compact&theme=graywhite&hide_border=true" height="150" />
-</p>
+[![X](https://img.shields.io/badge/-@kailunchen5-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/kailunchen5)
