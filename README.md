@@ -10,6 +10,7 @@ Building AI agents and systems infrastructure.
 
 - 🐘 **[eli](https://github.com/cklxx/eli)** — Leader agent with dual-process architecture: lightweight chat thread for instant response, full ReAct agent for background execution
 - ⚡️ **[agent-infer](https://github.com/cklxx/agent-infer)** - KV-cache-first inference engine for LLM agents. Pure Rust + CUDA
+- ⚡️ **[kernel-set](https://github.com/cklxx/kernel-set)** - High-performance CUDA kernels for LLM inference & training 
 - 🌱 **[openSeed](https://github.com/cklxx/OpenSeed)** — Research CLI to search, read, and analyze academic papers with Claude
 - ⚡ **[openMax](https://github.com/cklxx/openMax)** — Multi-agent orchestration hub
 - 🧪 **[openbench](https://github.com/cklxx/openbench)** — A/B testing platform for Claude agents
