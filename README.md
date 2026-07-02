@@ -2,10 +2,6 @@
 
 Building AI agents and systems infrastructure.
 
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white)
-![Claude](https://img.shields.io/badge/-Claude-000000?style=flat-square&logo=anthropic&logoColor=white)
-
 ## Projects
 
 - 🐘 **[eli](https://github.com/cklxx/eli)** — Leader agent with dual-process architecture: lightweight chat thread for instant response, full ReAct agent for background execution
