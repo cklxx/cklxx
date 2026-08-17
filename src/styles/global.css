@@ -169,7 +169,6 @@ article mark {
   background: transparent;
   padding: 0;
   cursor: pointer;
-  --link-color: #6b5a3b;
   --stone-merge: #cbbca4;
 }
 
@@ -196,7 +195,6 @@ article mark {
 }
 
 .go-chain-cell.black {
-  --link-color: #2b2b2b;
   --stone-merge: #1d1d1d;
 }
 
@@ -207,8 +205,7 @@ article mark {
 }
 
 .go-chain-cell.white {
-  --link-color: #e2d7c8;
-  --stone-merge: #f4eee4;
+  --stone-merge: #f8f6f0;
 }
 
 .go-chain-cell .merge {
@@ -236,8 +233,7 @@ article mark {
 
 .go-chain-cell .link {
   position: absolute;
-  background: var(--link-color);
-  border-radius: 999px;
+  background: var(--stone-merge);
   opacity: 0;
   z-index: 1;
   transition: opacity 0.2s ease;
@@ -250,63 +246,70 @@ article mark {
   opacity: 1;
 }
 
-.go-chain-cell .link.up-left,
-.go-chain-cell .link.up-right,
-.go-chain-cell .link.down-left,
-.go-chain-cell .link.down-right {
-  width: 40%;
-  height: 10%;
-  top: 50%;
-  left: 50%;
-  transform-origin: left center;
-}
-
+/* Quarter-circle corner fills: three cells' fills form a 3/4 disk at an
+   L-shape's concave corner, four form a full disk in a 2x2 block. */
 .go-chain-cell .link.up-left {
-  transform: translate(-50%, -50%) rotate(-135deg);
+  top: -10%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  border-radius: 0 0 100% 0;
 }
 
 .go-chain-cell .link.up-right {
-  transform: translate(-50%, -50%) rotate(-45deg);
+  top: -10%;
+  right: -10%;
+  width: 70%;
+  height: 70%;
+  border-radius: 0 0 0 100%;
 }
 
 .go-chain-cell .link.down-left {
-  transform: translate(-50%, -50%) rotate(135deg);
+  bottom: -10%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  border-radius: 0 100% 0 0;
 }
 
 .go-chain-cell .link.down-right {
-  transform: translate(-50%, -50%) rotate(45deg);
+  bottom: -10%;
+  right: -10%;
+  width: 70%;
+  height: 70%;
+  border-radius: 100% 0 0 0;
 }
 
 .go-chain-cell .merge.up,
 .go-chain-cell .merge.down {
   left: 50%;
-  width: 46%;
-  height: 34%;
+  width: 80%;
+  height: 40%;
   transform: translateX(-50%);
 }
 
 .go-chain-cell .merge.left,
 .go-chain-cell .merge.right {
   top: 50%;
-  width: 34%;
-  height: 46%;
+  width: 40%;
+  height: 80%;
   transform: translateY(-50%);
 }
 
 .go-chain-cell .merge.up {
-  top: -10%;
+  top: -15%;
 }
 
 .go-chain-cell .merge.down {
-  bottom: -10%;
+  bottom: -15%;
 }
 
 .go-chain-cell .merge.left {
-  left: -10%;
+  left: -15%;
 }
 
 .go-chain-cell .merge.right {
-  right: -10%;
+  right: -15%;
 }
 
 @keyframes merge-pop {
