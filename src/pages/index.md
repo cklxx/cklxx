@@ -157,19 +157,38 @@ title: "主页"
           cell.classList.add("merge-right");
         }
 
-        if (row > 0 && col > 0 && board[row - 1][col - 1] === color) {
+        // ponytail: diagonal corner fill only for concave corners of a
+        // same-color blob — require an orthogonal bridge, else isolated
+        // diagonal stones poke spikes at each other.
+        if (
+          row > 0 &&
+          col > 0 &&
+          board[row - 1][col - 1] === color &&
+          (board[row - 1][col] === color || board[row][col - 1] === color)
+        ) {
           cell.classList.add("link-up-left");
         }
-        if (row > 0 && col < boardSize - 1 && board[row - 1][col + 1] === color) {
+        if (
+          row > 0 &&
+          col < boardSize - 1 &&
+          board[row - 1][col + 1] === color &&
+          (board[row - 1][col] === color || board[row][col + 1] === color)
+        ) {
           cell.classList.add("link-up-right");
         }
-        if (row < boardSize - 1 && col > 0 && board[row + 1][col - 1] === color) {
+        if (
+          row < boardSize - 1 &&
+          col > 0 &&
+          board[row + 1][col - 1] === color &&
+          (board[row + 1][col] === color || board[row][col - 1] === color)
+        ) {
           cell.classList.add("link-down-left");
         }
         if (
           row < boardSize - 1 &&
           col < boardSize - 1 &&
-          board[row + 1][col + 1] === color
+          board[row + 1][col + 1] === color &&
+          (board[row + 1][col] === color || board[row][col + 1] === color)
         ) {
           cell.classList.add("link-down-right");
         }
@@ -357,6 +376,10 @@ title: "主页"
 </script>
 
 <ul class="listing">
+  <li>
+    <strong><a href="blog/diagonal-link-fix/">斜角突出：一个视觉语义的修正</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
   <li>
     <strong><a href="blog/my-method/">我的方法：从拆解到重建</a></strong>
     <span class="meta">2025-01-01</span>
