@@ -56,6 +56,12 @@ article p {
   margin: 1rem 0;
 }
 
+article mark {
+  background: #fff3bf;
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
 .listing {
   list-style: none;
   padding: 0;

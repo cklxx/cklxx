@@ -377,12 +377,32 @@ title: "主页"
 
 <ul class="listing">
   <li>
-    <strong><a href="blog/diagonal-link-fix/">斜角突出：一个视觉语义的修正</a></strong>
+    <strong><a href="blog/good-questions/">好问题：制造认知张力</a></strong>
     <span class="meta">2026-08-17</span>
   </li>
   <li>
-    <strong><a href="blog/my-method/">我的方法：从拆解到重建</a></strong>
-    <span class="meta">2025-01-01</span>
+    <strong><a href="blog/pareto/">2/8 定律：分布的非线性</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
+    <strong><a href="blog/expression/">表达的 7C 原则</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
+    <strong><a href="blog/skill-writing/">写好 Skill：三层结构</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
+    <strong><a href="blog/human-value/">AI 时代人的价值</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
+    <strong><a href="blog/intelligence-constraints/">智能是发现约束</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
+    <strong><a href="blog/diagonal-link-fix/">斜角突出：一个视觉语义的修正</a></strong>
+    <span class="meta">2026-08-17</span>
   </li>
   <li>
     <strong><a href="blog/speculative-decoding/">Speculative Decoding 读书笔记</a></strong>
