@@ -377,6 +377,10 @@ title: "主页"
 
 <ul class="listing">
   <li>
+    <strong><a href="blog/diagonal-link-fix/">斜角突出：一个视觉语义的修正</a></strong>
+    <span class="meta">2026-08-17</span>
+  </li>
+  <li>
     <strong><a href="blog/my-method/">我的方法：从拆解到重建</a></strong>
     <span class="meta">2025-01-01</span>
   </li>
